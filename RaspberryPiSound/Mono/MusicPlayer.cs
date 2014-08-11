@@ -89,7 +89,7 @@ namespace RaspberryPiSound.Mono
             {
                 var file = _playlist.Dequeue();
                 CurrentTrack = file;
-                Trace.WriteLine("PlayNextSong > Dequeued an trying to play: " + file);
+                Trace.WriteLine("PlayNextSong > Dequeued an trying to play: " + file.FullPath);
                 Command("LOAD " + file.FullPath);
                 _isPlaying = true;
             }

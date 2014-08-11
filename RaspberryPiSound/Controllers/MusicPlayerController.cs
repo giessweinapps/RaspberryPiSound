@@ -16,7 +16,8 @@ namespace RaspberryPiSound.Controllers
     public class MusicPlayerController : ApiController
     {
         private readonly IMusicPlayer _player;
-
+        private readonly Dictionary<string, Tag> _tagCache = new Dictionary<string, Tag>();
+ 
         public MusicPlayerController(IMusicPlayer player)
         {
             _player = player;
@@ -28,8 +29,12 @@ namespace RaspberryPiSound.Controllers
             Tag tag = null;
             if (_player.CurrentTrack != null)
             {
+                if (_tagCache.ContainsKey(_player.CurrentTrack.FullPath))
+                    return _tagCache[_player.CurrentTrack.FullPath];
+
                 var fileTag = TagLib.File.Create(_player.CurrentTrack.FullPath);
                 tag = fileTag.Tag;
+                _tagCache.Add(_player.CurrentTrack.FullPath, tag);
             }
 
             return tag;

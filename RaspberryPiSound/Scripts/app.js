@@ -3,14 +3,12 @@
 
 function refresh($http, $scope)
 {
-    $scope.isBusy = true;
     $http.get('/api/Volume').success(function (result) {
         $scope.Volume = result;
     });
 
     $http.get('/api/MusicPlayer').success(function (result) {
         $scope.currentTrack = result;
-        $scope.isBusy = false;
     });
 }
 
@@ -27,7 +25,7 @@ function switchDirectory($http, $scope, dir)
     refresh($http, $scope);
 }
 
-app.controller('musicController', function ($scope, $http) {
+app.controller('musicController', function ($scope, $http, $timeout) {
     $scope.isBusy = true;
     $scope.init = false;
     $scope.currentDir = "";
@@ -98,4 +96,11 @@ app.controller('musicController', function ($scope, $http) {
 
     switchDirectory($http, $scope, $scope.currentDir);
     refresh($http, $scope);
+
+    var countUp = function() {
+        refresh($http, $scope);
+        $timeout(countUp, 5000);
+    };
+
+    $timeout(countUp, 5000);
 });

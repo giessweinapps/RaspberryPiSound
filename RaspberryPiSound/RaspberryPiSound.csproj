@@ -129,6 +129,7 @@
     <Content Include="Content\style.css" />
     <Content Include="Index.htm" />
     <Content Include="Global.asax" />
+    <Content Include="Favicon.ico" />
     <Content Include="Ninject.dll" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app.js" />
