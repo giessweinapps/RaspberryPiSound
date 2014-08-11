@@ -10,6 +10,10 @@ function refresh($http, $scope)
     $http.get('/api/MusicPlayer').success(function (result) {
         $scope.currentTrack = result;
     });
+
+    $http.get('/api/Playlist').success(function (result) {
+        $scope.playList = result;
+    });
 }
 
 function switchDirectory($http, $scope, dir)
