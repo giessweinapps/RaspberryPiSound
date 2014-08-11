@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html ng-app="raspberryPiSoundApp">
+<head>
+    <meta charset="utf-8">
+    <title>RaspberryPiSound</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="Content/bootstrap.min.css" media="screen">
+    <link href="Content/style.css" rel="stylesheet" />
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/app.js"></script>
+    <meta name="description" content="The description of my page" />
+</head>
+<body ng-controller="musicController">
+    <div class="loader" ng-show="isBusy || !init">
+        <img style="margin: 0 auto; margin-left:-15px; margin-top:-15px" src="Content/ajax-loader.gif" />
+    </div>
+    <div class="container" ng-show="init">
+        <div class="jumbotron">
+            <h2 style="margin-top:0">{{currentTrack.Artists[0]}}</h2>
+            <h3 style="margin-top:0">{{currentTrack.Title}}</h3>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{Volume}}%;">
+                    <span class="sr-only">{{Volume}}% Complete</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <a href="" class="btn btn-primary btn-block" ng-click="VolumeUp()"><img src="Content/sound.png" alt="" /> +</a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="" class="btn btn-primary btn-block" ng-click="VolumeDown()"><img src="Content/sound_low.png" alt="" /> -</a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="" class="btn btn-primary btn-block" ng-click="PlayNext()"><img src="Content/control_fastforward.png" alt="" /> Next</a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="" class="btn btn-primary btn-block" ng-click="PauseMusic()"><img src="Content/control_pause.png" alt="" /> Pause</a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="" class="btn btn-primary btn-block" ng-click="StopMusic()"><img src="Content/control_stop.png" alt="" /> Stop</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Verzeichnis {{currentDir}}</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="" ng-click="SwitchDirectoryBack()">
+                                    <img class="icon" src="Content/folders_explorer.png" />
+                                    Zurück
+                                </a>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="dir in Directories">
+                        <tr>
+                            <td>
+                                <a href="" ng-click="SwitchDirectory(dir)">
+                                    <img class="icon" src="Content/folder.png" />{{dir.Name}}
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width="30" align="right">#</th>
+                            <th>MP3</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="file in MusicFiles">
+                        <tr>
+                            <td align="right">{{$index + 1}}</td>
+                            <td>
+                                <a href="" ng-click="PlaySingle(file)">
+                                    <img class="icon" src="Content/music.png" />{{file.Name}}
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot ng-hide="MusicFiles.length == 0">
+                        <tr>
+                            <td align="right"></td>
+                            <td><a href="" ng-click="PlayAll(MusicFiles)"><img class="icon" src="Content/music.png" /> Play All</a></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
